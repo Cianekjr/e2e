@@ -15,21 +15,12 @@
     "prepare": "husky install",
     "prettier": "prettier --config .prettierrc --write ./",
     "heroku-cleanup": "rm -rf .next/cache && find node_modules/@next -depth -maxdepth 1 -type d -name 'swc*' -exec rm -rf {} \\; -prune #Remove cache and SWC binaries to reduce heroku slug size",
-    "test:e2e": "env-cmd -f .env.e2e synpress run --configFile=synpress.config.ts"
+    "test:e2e": "synpress run --configFile=synpress.config.ts"
   },
   "dependencies": {
     "@metamask/detect-provider": "^2.0.0",
     "dotenv": "^16.0.3",
-    "ejs": "^3.1.8",
-    "eth-sig-util": "^3.0.1",
-    "ethereumjs-util": "^7.1.5",
-    "ethers": "^5.7.2",
-    "express": "^4.18.2",
-    "formik": "^2.2.9",
-    "ga-4-react": "^0.1.281",
-    "uuid": "^9.0.0",
-    "xregexp": "^5.1.1",
-    "yup": "^0.32.11"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@ethersproject/providers": "^5.7.2",
