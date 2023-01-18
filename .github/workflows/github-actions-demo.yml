@@ -30,7 +30,6 @@ jobs:
       #     SECRET_WORDS: 'basket they there crop purity swing monster skin rough clap amused pumpkin'
       #     NETWORK_NAME: ''
       #     CYPRESS_BASE_URL: 'https://uniqly-app-stage-08-9375.herokuapp.com'
-      #     DISPLAY: display:99
       #     CYPRESS_DOCKER_RUN: true
       - uses: isbang/compose-action@v1.4.1
         env:
@@ -38,7 +37,6 @@ jobs:
           SECRET_WORDS: 'basket they there crop purity swing monster skin rough clap amused pumpkin'
           NETWORK_NAME: ''
           CYPRESS_BASE_URL: 'https://uniqly-app-stage-08-9375.herokuapp.com'
-          DISPLAY: display:99
           CYPRESS_DOCKER_RUN: true
       - name: Run docker
         run: docker-compose up
@@ -47,5 +45,4 @@ jobs:
           SECRET_WORDS: 'basket they there crop purity swing monster skin rough clap amused pumpkin'
           NETWORK_NAME: ''
           CYPRESS_BASE_URL: 'https://uniqly-app-stage-08-9375.herokuapp.com'
-          DISPLAY: display:99
           CYPRESS_DOCKER_RUN: true

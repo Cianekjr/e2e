@@ -22,4 +22,5 @@ RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.co
   dpkg -i /usr/src/google-chrome-stable_current_amd64.deb ; \
   apt-get install -f -y && \
   rm -f /usr/src/google-chrome-stable_current_amd64.deb
+RUN yarn global add cypress
 COPY . .
