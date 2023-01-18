@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
-          
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
@@ -30,7 +30,7 @@ jobs:
           options: #optional
         env:
           CYPRESS_NETWORK_NAME: 
-          SECRET_WORDS: basket they there crop purity swing monster skin rough clap amused pumpkin
+          SECRET_WORDS: alone unaware convince nation lyrics million thumb path bronze seat cargo rug
           NETWORK_NAME: 
           CYPRESS_BASE_URL: https://uniqly-app-stage-08-9375.herokuapp.com
           CYPRESS_DOCKER_RUN: true
