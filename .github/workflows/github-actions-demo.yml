@@ -13,20 +13,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
+      # - name: Use Node.js ${{ matrix.node-version }}
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: ${{ matrix.node-version }}
+      #     cache: 'yarn'
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+      # - name: Install dependencies
+      #   run: yarn install --frozen-lockfile
 
-      - name: Run e2e tests
-        run: yarn test:e2e
+      # - name: Run e2e tests
+      #   run: yarn test:e2e
           
+      #   env:
+      #     CYPRESS_NETWORK_NAME: ''
+      #     SECRET_WORDS: 'basket they there crop purity swing monster skin rough clap amused pumpkin'
+      #     NETWORK_NAME: ''
+      #     CYPRESS_BASE_URL: 'https://uniqly-app-stage-08-9375.herokuapp.com'
+      #     DISPLAY: display:99
+      #     CYPRESS_DOCKER_RUN: true
+      - uses: isbang/compose-action@v1.4.1
         env:
           CYPRESS_NETWORK_NAME: ''
           SECRET_WORDS: 'basket they there crop purity swing monster skin rough clap amused pumpkin'
           NETWORK_NAME: ''
           CYPRESS_BASE_URL: 'https://uniqly-app-stage-08-9375.herokuapp.com'
+          DISPLAY: display:99
+          CYPRESS_DOCKER_RUN: true
