@@ -31,7 +31,7 @@ jobs:
 
       - uses: isbang/compose-action@v1.4.1
       - name: Run docker
-        run: docker-compose --profile foundry up --build
+        run: docker-compose up --build
         env:
           CYPRESS_NETWORK_NAME: 
           SECRET_WORDS: basket they there crop purity swing monster skin rough clap amused pumpkin
