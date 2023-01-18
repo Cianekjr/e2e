@@ -3,7 +3,7 @@ on: [push]
 jobs:
   build:
     timeout-minutes: 10
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
