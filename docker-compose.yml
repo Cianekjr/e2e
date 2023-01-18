@@ -11,10 +11,10 @@ services:
       # - DEBUG=${DEBUG}
       - GH_PAT=${GH_PAT}
       - GH_USERNAME=${GH_USERNAME}
-      - CYPRESS_NETWORK_NAME=''
-      - SECRET_WORDS='basket they there crop purity swing monster skin rough clap amused pumpkin'
-      - NETWORK_NAME=''
-      - CYPRESS_BASE_URL='https://uniqly-app-stage-08-9375.herokuapp.com'
+      - CYPRESS_NETWORK_NAME=
+      - SECRET_WORDS=basket they there crop purity swing monster skin rough clap amused pumpkin
+      - NETWORK_NAME=
+      - CYPRESS_BASE_URL=https://uniqly-app-stage-08-9375.herokuapp.com
       - CYPRESS_DOCKER_RUN=true
       - DEBUG=cypress:*
     depends_on:
