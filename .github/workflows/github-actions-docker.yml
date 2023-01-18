@@ -42,13 +42,6 @@ jobs:
           CYPRESS_BASE_URL: https://uniqly-app-stage-08-9375.herokuapp.com
           CYPRESS_DOCKER_RUN: true
 
-      #   env:
-      #     CYPRESS_NETWORK_NAME: 
-      #     SECRET_WORDS: basket they there crop purity swing monster skin rough clap amused pumpkin
-      #     NETWORK_NAME: 
-      #     CYPRESS_BASE_URL: https://uniqly-app-stage-08-9375.herokuapp.com
-      #     CYPRESS_DOCKER_RUN: true
-
       - name: Archive e2e artifacts
         uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
         if: always()

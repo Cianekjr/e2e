@@ -1,0 +1,49 @@
+name: Test App
+on: [push]
+jobs:
+  build:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+          
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run headless test
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          run: yarn test:e2e
+          working-directory: ./ #optional
+          options: #optional
+        env:
+          CYPRESS_NETWORK_NAME: 
+          SECRET_WORDS: basket they there crop purity swing monster skin rough clap amused pumpkin
+          NETWORK_NAME: 
+          CYPRESS_BASE_URL: https://uniqly-app-stage-08-9375.herokuapp.com
+          CYPRESS_DOCKER_RUN: true
+
+      - name: Archive e2e artifacts
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
+        if: always()
+        with:
+          name: e2e-artifacts
+          retention-days: 3
+          path: |
+            app/tests/e2e/videos
+            ./tests/e2e/videos
+            tests/e2e/videos
+            app/tests/e2e/screenshots
+        continue-on-error: true
