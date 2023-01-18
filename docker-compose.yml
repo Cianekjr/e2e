@@ -16,7 +16,6 @@ services:
       - NETWORK_NAME=
       - CYPRESS_BASE_URL=https://uniqly-app-stage-08-9375.herokuapp.com
       - CYPRESS_DOCKER_RUN=true
-      - DEBUG=cypress:*
     depends_on:
       - display
       - video
