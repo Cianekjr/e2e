@@ -3,7 +3,7 @@ on: [push]
 jobs:
   build:
     timeout-minutes: 10
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     strategy:
       matrix:
@@ -40,7 +40,7 @@ jobs:
       #     NETWORK_NAME: 
       #     CYPRESS_BASE_URL: https://uniqly-app-stage-08-9375.herokuapp.com
       #     CYPRESS_DOCKER_RUN: true
-      
+
       - name: Run headless test
         uses: GabrielBB/xvfb-action@v1
         with:
@@ -61,6 +61,8 @@ jobs:
           name: e2e-artifacts
           retention-days: 3
           path: |
-            /app/tests/e2e/videos
-            /app/tests/e2e/screenshots
+            app/tests/e2e/videos
+            ./tests/e2e/videos
+            tests/e2e/videos
+            app/tests/e2e/screenshots
         continue-on-error: true
