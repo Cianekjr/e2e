@@ -18,9 +18,4 @@ RUN yarn config delete https-proxy
 RUN yarn config delete registry
 RUN yarn cache clean --force
 RUN yarn install --network-timeout 300000
-RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_96.0.4664.110-1_amd64.deb" && \
-  dpkg -i /usr/src/google-chrome-stable_current_amd64.deb ; \
-  apt-get install -f -y && \
-  rm -f /usr/src/google-chrome-stable_current_amd64.deb
-RUN yarn global add cypress
 COPY . .
