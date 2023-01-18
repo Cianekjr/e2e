@@ -40,3 +40,14 @@ jobs:
           NETWORK_NAME: 
           CYPRESS_BASE_URL: https://uniqly-app-stage-08-9375.herokuapp.com
           CYPRESS_DOCKER_RUN: true
+
+      - name: Archive e2e artifacts
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
+        if: always()
+        with:
+          name: e2e-artifacts
+          retention-days: 3
+          path: |
+            /app/tests/e2e/videos
+            /app/tests/e2e/screenshots
+        continue-on-error: true
