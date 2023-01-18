@@ -21,13 +21,17 @@ const config = {
   token: "UNIQ",
 };
 
-const login = (name = "session") => {
-  cy.session(name, () => {
+const login = (xx: boolean) => {
+  cy.session("session", () => {
     home.visit();
     auth.pressLoginButton();
     auth.pressConnectMetamask();
 
-    cy.confirmMetamaskSignatureRequest();
+    if (xx) {
+      cy.confirmMetamaskSignatureRequest();
+    } else {
+      global.acceptMetamaskAccessRequest(true);
+    }
 
     auth.isLoggedIn();
   });
@@ -39,7 +43,7 @@ describe("MM mint and redeem old store", () => {
   });
 
   it(`should mint product with success`, () => {
-    login();
+    login(false);
 
     shop.visit();
     shop.pressStore(config.store);
@@ -69,7 +73,7 @@ describe("MM mint and redeem old store", () => {
   });
 
   it(`should redeem to physical with success`, () => {
-    login();
+    login(true);
 
     myItems.visit();
     myItems.pressItemToRedeem(config.bundle);
