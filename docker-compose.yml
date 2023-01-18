@@ -26,7 +26,6 @@ services:
     networks:
       - x11
     ipc: host
-    platform: linux/arm64/v8
 
   display:
     container_name: display
