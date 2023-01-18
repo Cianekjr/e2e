@@ -33,7 +33,7 @@ jobs:
       #     CYPRESS_DOCKER_RUN: true
       - uses: isbang/compose-action@v1.4.1
       - name: Run docker
-        run: docker-compose up
+        run: docker-compose --profile ngrok up --build
         env:
           CYPRESS_NETWORK_NAME: 
           SECRET_WORDS: basket they there crop purity swing monster skin rough clap amused pumpkin
