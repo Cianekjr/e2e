@@ -9,10 +9,8 @@ workflows:
       events:
         - push
       branch_patterns:
-        - pattern: '*'
-          include: true
-          source: true
-      cancel_previous_builds: false
+        - pattern: *
+      cancel_previous_builds: true
     artifacts: 
       - app/tests/e2e/videos
       - ./tests/e2e/videos
