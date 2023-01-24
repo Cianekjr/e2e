@@ -13,6 +13,11 @@ workflows:
           include: true
           source: true
       cancel_previous_builds: false
+    artifacts: 
+      - app/tests/e2e/videos
+      - ./tests/e2e/videos
+      - tests/e2e/videos
+      - app/tests/e2e/screenshots
     scripts:
         - name: 'install'
           script: yarn install --frozen-lockfile
