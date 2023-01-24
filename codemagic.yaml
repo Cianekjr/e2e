@@ -2,6 +2,9 @@ workflows:
   hello-world:
     name: Hello world workflow
     instance_type: mac_mini_m1
+    environment:
+      groups:
+        - test
     triggering:
       events:
         - push
