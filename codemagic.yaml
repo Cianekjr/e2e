@@ -2,8 +2,6 @@ workflows:
   hello-world:
     name: Hello world workflow
     instance_type: mac_mini_m1
-    enviroment:
-      node: 16.14.0
     triggering:
       events:
         - push
