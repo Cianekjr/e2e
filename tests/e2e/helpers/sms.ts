@@ -3,7 +3,7 @@
 import sms from "sms-receive";
 
 const ari10MessageMatcher = "this is your verification code to pay";
-const ari10Receiver = ["8525122887050000"];
+const ari10Receiver = ["+18446642604"];
 
 interface Message {
   message: string;
@@ -23,7 +23,7 @@ export class Sms {
       return this.number;
     }
 
-    const numbers = await sms.numbers("Hong Kong");
+    const numbers = await sms.numbers("United States");
 
     this.number = numbers.at(-1);
 
