@@ -1,9 +1,12 @@
 import { v4 as uuidV4 } from "uuid";
 
+import MyProfilePage from "../pages/my-profile-page";
 import Auth from "../pages/auth";
 import HomePage from "../pages/home-page";
 import { generateNewWallet } from "../helpers/wallet";
 import Global from "../pages/global";
+
+const myProfile = new MyProfilePage();
 
 const home = new HomePage();
 const auth = new Auth();
@@ -48,5 +51,23 @@ describe("MM account", () => {
     login("metamask-session-login", () => {
       cy.confirmMetamaskSignatureRequest();
     });
+  });
+
+  it(`should update user profile`, () => {
+    login("metamask-session-login", () => {
+      cy.confirmMetamaskSignatureRequest();
+    });
+
+    myProfile.visit();
+
+    myProfile.fillNickname(config.nickname);
+    myProfile.fillEmail(config.email);
+    myProfile.submitMyProfileUpdate();
+
+    cy.waitForResources();
+    cy.reload();
+
+    myProfile.checkNickname(config.nickname);
+    myProfile.checkEmail(config.email);
   });
 });

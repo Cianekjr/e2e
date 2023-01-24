@@ -6,9 +6,33 @@ import metamask from "@synthetixio/synpress/commands/metamask";
 import synthetix from "@synthetixio/synpress/commands/synthetix";
 import etherscan from "@synthetixio/synpress/commands/etherscan";
 
+import { Sms } from "../helpers/sms";
+import { Mailer } from "../helpers/mailer";
+
 export const setupNodeEvents = (on, config) => {
+  const smsService = new Sms();
+  const mailerService = new Mailer();
+
   on("task", {
     // CUSTOM START
+    getAri10PhoneNumber: async () => {
+      const number = await smsService.getPhoneNumber();
+      return number;
+    },
+    getAri10Code: async () => {
+      const code = await smsService.watchAri10Message();
+      return code;
+    },
+    getMailerEmail: async () => {
+      const email = await mailerService.getEmailAccount();
+      return email;
+    },
+    getEmailMessage: async ({ subject }: { subject: string }) => {
+      const emailMessage = await mailerService.watchMailerMessage({
+        subject,
+      });
+      return emailMessage;
+    },
     // CUSTOM END
     error(message) {
       console.error("\u001B[31m", "ERROR:", message, "\u001B[0m");
