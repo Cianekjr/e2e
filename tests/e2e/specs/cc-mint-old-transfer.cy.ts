@@ -65,16 +65,16 @@ describe("CC mint old and transfer", () => {
     shop.fillAri10PhoneNumber();
     shop.submitAri10PhoneNumber();
 
-    // shop.fillAri10Code();
-    // shop.submitAri10Code();
+    shop.fillAri10Code();
+    shop.submitAri10Code();
 
-    // shop.chooseTestPaymentMethod();
-    // shop.submitAri10PaymentMethod();
-    // shop.checkAri10Terms();
+    shop.chooseTestPaymentMethod();
+    shop.submitAri10PaymentMethod();
+    shop.checkAri10Terms();
 
-    // shop.submitAri10Form();
+    shop.submitAri10Form();
 
-    // shop.checkAri10SuccessEmail();
+    shop.checkAri10SuccessEmail();
   });
 
   it(`should connect metamask to the off-chain account`, () => {
