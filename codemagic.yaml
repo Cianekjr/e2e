@@ -1,0 +1,19 @@
+workflows:
+  hello-world:
+    name: Hello world workflow
+    instance_type: mac_mini_m1
+    enviroment:
+      node: 16.15.0
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: '*'
+          include: true
+          source: true
+      cancel_previous_builds: false
+    scripts:
+        - name: 'install'
+          script: yarn install --frozen-lockfile
+        - name: 'run test'
+          script: yarn test:e2e
