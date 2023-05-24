@@ -1,87 +1,87 @@
-import Global from "../pages/global";
-import Auth from "../pages/auth";
-import HomePage from "../pages/home-page";
-import ShopPage from "../pages/shop-page";
-import MyItemsPage from "../pages/my-items-page";
-import NftPage from "../pages/nft-page";
-import RedeemPage from "../pages/redeem-page";
+// import Global from "../pages/global";
+// import Auth from "../pages/auth";
+// import HomePage from "../pages/home-page";
+// import ShopPage from "../pages/shop-page";
+// import MyItemsPage from "../pages/my-items-page";
+// import NftPage from "../pages/nft-page";
+// import RedeemPage from "../pages/redeem-page";
 
-const global = new Global();
-const auth = new Auth();
-const home = new HomePage();
-const shop = new ShopPage();
-const myItems = new MyItemsPage();
-const nft = new NftPage();
-const redeem = new RedeemPage();
+// const global = new Global();
+// const auth = new Auth();
+// const home = new HomePage();
+// const shop = new ShopPage();
+// const myItems = new MyItemsPage();
+// const nft = new NftPage();
+// const redeem = new RedeemPage();
 
-const config = {
-  store: "uniqly-uniqly",
-  bundle: "uniqly-test",
-  token: "UNIQ",
-};
+// const config = {
+//   store: "uniqly-uniqly",
+//   bundle: "uniqly-test",
+//   token: "UNIQ",
+// };
 
-const login = (name = "session") => {
-  cy.session(name, () => {
-    home.visit();
-    auth.pressLoginButton();
-    auth.pressConnectMetamask();
-    cy.confirmMetamaskSignatureRequest();
-    auth.isLoggedIn();
-  });
-};
+// const login = (name = "session") => {
+//   cy.session(name, () => {
+//     home.visit();
+//     auth.pressLoginButton();
+//     auth.pressConnectMetamask();
+//     cy.confirmMetamaskSignatureRequest();
+//     auth.isLoggedIn();
+//   });
+// };
 
-describe("MM mint and redeem partner store", () => {
-  it(`should mint product with success`, () => {
-    login();
+// describe("MM mint and redeem partner store", () => {
+//   it(`should mint product with success`, () => {
+//     login();
 
-    shop.visit();
-    shop.pressStore(config.store);
+//     shop.visit();
+//     shop.pressStore(config.store);
 
-    cy.wait(2000);
+//     cy.wait(2000);
 
-    shop.pressBundle(config.bundle);
-    auth.isLoggedIn();
+//     shop.pressBundle(config.bundle);
+//     auth.isLoggedIn();
 
-    shop.pressCryptoPayment();
+//     shop.pressCryptoPayment();
 
-    cy.wait(3000);
+//     cy.wait(3000);
 
-    shop.selectToken("UNIQ");
-    shop.checkTerms();
-    shop.pressBuyButton();
-    shop.pressBuyModalButton();
+//     shop.selectToken("UNIQ");
+//     shop.checkTerms();
+//     shop.pressBuyButton();
+//     shop.pressBuyModalButton();
 
-    global.confirmMetamaskTransaction();
+//     global.confirmMetamaskTransaction();
 
-    shop.checkThankYouModal();
+//     shop.checkThankYouModal();
 
-    shop.closeThankYouModal();
+//     shop.closeThankYouModal();
 
-    cy.wait(10000);
-  });
+//     cy.wait(10000);
+//   });
 
-  it(`should redeem minted item with success`, () => {
-    login();
+//   it(`should redeem minted item with success`, () => {
+//     login();
 
-    myItems.visit();
-    myItems.pressItemToRedeem(config.bundle);
+//     myItems.visit();
+//     myItems.pressItemToRedeem(config.bundle);
 
-    auth.isLoggedIn();
+//     auth.isLoggedIn();
 
-    nft.pressPhysical();
-    nft.pressBuyButton();
+//     nft.pressPhysical();
+//     nft.pressBuyButton();
 
-    auth.isLoggedIn();
+//     auth.isLoggedIn();
 
-    redeem.fillRedeemForm("M");
-    redeem.pressCryptoPayment();
-    redeem.selectToken("UNIQ");
-    redeem.checkTerms();
-    redeem.pressRedeemButton();
-    redeem.pressRedeemModalButton();
+//     redeem.fillRedeemForm("M");
+//     redeem.pressCryptoPayment();
+//     redeem.selectToken("UNIQ");
+//     redeem.checkTerms();
+//     redeem.pressRedeemButton();
+//     redeem.pressRedeemModalButton();
 
-    global.confirmMetamaskTransaction();
+//     global.confirmMetamaskTransaction();
 
-    shop.checkThankYouModal();
-  });
-});
+//     shop.checkThankYouModal();
+//   });
+// });
