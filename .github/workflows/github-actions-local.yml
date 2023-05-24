@@ -22,18 +22,40 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Run headless test
-        uses: GabrielBB/xvfb-action@v1
-        with:
-          run: yarn test:e2e
-          working-directory: ./ #optional
-          options: #optional
+      # - name: Run headless test
+      #   uses: GabrielBB/xvfb-action@v1
+      #   with:
+      #     run: yarn test:e2e
+      #     working-directory: ./ #optional
+      #     options: #optional
+      #   env:
+      #     CYPRESS_NETWORK_NAME: 
+      #     SECRET_WORDS: alone unaware convince nation lyrics million thumb path bronze seat cargo rug
+      #     NETWORK_NAME: 
+      #     CYPRESS_BASE_URL: https://uniqly-app-stage-08-9375.herokuapp.com
+      #     CYPRESS_DOCKER_RUN: true
+      - name: Install linux deps
+        run: |
+          sudo apt-get install --no-install-recommends -y \
+          fluxbox \
+          xvfb
+
+      - name: Run e2e tests (headful)
+        run: |
+          Xvfb :0 -screen 0 1024x768x24 -listen tcp -ac &
+          fluxbox &
+          yarn test:e2e
         env:
           CYPRESS_NETWORK_NAME: 
           SECRET_WORDS: alone unaware convince nation lyrics million thumb path bronze seat cargo rug
           NETWORK_NAME: 
           CYPRESS_BASE_URL: https://uniqly-app-stage-08-9375.herokuapp.com
           CYPRESS_DOCKER_RUN: true
+          # CYPRESS_PRIVATE_KEY_WITH_FUNDS:
+          #   ${{ secrets.CYPRESS_PRIVATE_KEY_WITH_FUNDS }}
+          # GH_PAT: ${{ secrets.GH_PAT }}
+          # GH_USERNAME: ${{ secrets.GH_USERNAME }}
+          DISPLAY: :0.0
 
       - name: Archive e2e artifacts
         uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8

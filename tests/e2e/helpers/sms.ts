@@ -23,7 +23,7 @@ export class Sms {
       return this.number;
     }
 
-    const numbers = await sms.numbers("United States");
+    const numbers = await sms.numbers("Poland");
 
     this.number = numbers.at(-1);
 
