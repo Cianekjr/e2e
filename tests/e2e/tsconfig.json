@@ -10,6 +10,13 @@
       "@testing-library/cypress"
     ]
   },
-  "include": ["**/*.d.ts", "**/*.ts", "**/*.tsx", "**/*.json"],
-  "exclude": ["node_modules"]
+  "include": [
+    "**/*.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.json"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
