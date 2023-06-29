@@ -20,14 +20,16 @@
   },
   "dependencies": {
     "@metamask/detect-provider": "^2.0.0",
-    "cypress": "^12.13.0",
+    "cypress": "^12.16.0",
     "dotenv": "^16.0.3",
-    "uuid": "^9.0.0"
+    "ethers": "^6.4.0",
+    "uuid": "^9.0.0",
+    "viem": "^1.2.5"
   },
   "devDependencies": {
     "@ethersproject/providers": "^5.7.2",
     "@next/bundle-analyzer": "^13.1.2",
-    "@synthetixio/synpress": "^3.7.0",
+    "@synthetixio/synpress": "^3.7.1",
     "@types/compress.js": "^1.1.1",
     "@types/imap-simple": "^4.2.5",
     "@types/mailparser": "^3.4.0",

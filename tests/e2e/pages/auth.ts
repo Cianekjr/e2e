@@ -12,7 +12,7 @@ export default class Auth extends Global {
   }
 
   pressConnectMetamask() {
-    cy.get('span:contains("metamask wallet")').should("be.visible").click();
+    cy.get('button[type="button"]:contains("MetaMask")').should("be.visible").click();
   }
 
   isLoggedIn() {

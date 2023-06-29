@@ -1,19 +1,60 @@
 // This file is copied from `@synthetixio/synpress/plugins/index.js` and extended by custom tasks
 
+// @ts-ignore
 import helpers from "@synthetixio/synpress/helpers";
+// @ts-ignore
 import playwright from "@synthetixio/synpress/commands/playwright";
+// @ts-ignore
 import metamask from "@synthetixio/synpress/commands/metamask";
-import synthetix from "@synthetixio/synpress/commands/synthetix";
+// @ts-ignore
 import etherscan from "@synthetixio/synpress/commands/etherscan";
 
 import { Sms } from "../helpers/sms";
 import { Mailer } from "../helpers/mailer";
 
-export const setupNodeEvents = (on, config) => {
+
+
+/**
+ * @type {Cypress.PluginConfig}
+ */
+export const setupNodeEvents = (on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions) => {
   const smsService = new Sms();
   const mailerService = new Mailer();
+  // `on` is used to hook into various events Cypress emits
+  // `config` is the resolved Cypress config
 
-  on("task", {
+  on('before:browser:launch', async (browser = {}, arguments_) => {
+    if (browser.name === 'chrome') {
+      // metamask welcome screen blocks cypress from loading
+      arguments_.args.push(
+        '--disable-background-timer-throttling',
+        '--disable-backgrounding-occluded-windows',
+        '--disable-renderer-backgrounding',
+      );
+      if (process.env.CI) {
+        // Avoid: "dri3 extension not supported" error
+        arguments_.args.push('--disable-gpu');
+      }
+      if (process.env.HEADLESS_MODE) {
+        arguments_.args.push('--headless=new');
+      }
+      if (browser.isHeadless) {
+        arguments_.args.push('--window-size=1920,1080');
+      }
+    }
+
+    if (!process.env.SKIP_METAMASK_INSTALL) {
+      // NOTE: extensions cannot be loaded in headless Chrome
+      const metamaskPath = await helpers.prepareMetamask(
+        process.env.METAMASK_VERSION || '10.25.0',
+      );
+      arguments_.extensions.push(metamaskPath);
+    }
+
+    return arguments_;
+  });
+
+  on('task', {
     // CUSTOM START
     getAri10PhoneNumber: async () => {
       const number = await smsService.getPhoneNumber();
@@ -27,7 +68,7 @@ export const setupNodeEvents = (on, config) => {
       const email = await mailerService.getEmailAccount();
       return email;
     },
-    getEmailMessage: async ({ subject }: { subject: string }) => {
+    getEmailMessage: async ({ subject }) => {
       const emailMessage = await mailerService.watchMailerMessage({
         subject,
       });
@@ -35,12 +76,11 @@ export const setupNodeEvents = (on, config) => {
     },
     // CUSTOM END
     error(message) {
-      console.error("\u001B[31m", "ERROR:", message, "\u001B[0m");
+      console.error('\u001B[31m', 'ERROR:', message, '\u001B[0m');
       return true;
     },
     warn(message) {
-      // eslint-disable-next-line no-restricted-syntax
-      console.warn("\u001B[33m", "WARNING:", message, "\u001B[0m");
+      console.warn('\u001B[33m', 'WARNING:', message, '\u001B[0m');
       return true;
     },
     // playwright commands
@@ -60,7 +100,7 @@ export const setupNodeEvents = (on, config) => {
       const cleared = await playwright.clearWindows();
       return cleared;
     },
-    assignActiveTabName: async (tabName) => {
+    assignActiveTabName: async tabName => {
       const assigned = await playwright.assignActiveTabName(tabName);
       return assigned;
     },
@@ -84,71 +124,67 @@ export const setupNodeEvents = (on, config) => {
       const notificationPage = await playwright.switchToMetamaskNotification();
       return notificationPage;
     },
-    unlockMetamask: async (password) => {
+    unlockMetamask: async password => {
       const unlocked = await metamask.unlock(password);
       return unlocked;
     },
-    importMetamaskAccount: async (privateKey) => {
+    importMetamaskAccount: async privateKey => {
       const imported = await metamask.importAccount(privateKey);
       return imported;
     },
-    createMetamaskAccount: async (accountName) => {
+    createMetamaskAccount: async accountName => {
       const created = await metamask.createAccount(accountName);
       return created;
     },
-    switchMetamaskAccount: async (accountNameOrAccountNumber) => {
+    switchMetamaskAccount: async accountNameOrAccountNumber => {
       const switched = await metamask.switchAccount(accountNameOrAccountNumber);
       return switched;
     },
-    addMetamaskNetwork: async (network) => {
+    addMetamaskNetwork: async network => {
       const networkAdded = await metamask.addNetwork(network);
       return networkAdded;
     },
-    changeMetamaskNetwork: async (network) => {
+    changeMetamaskNetwork: async network => {
       if (process.env.NETWORK_NAME && !network) {
         network = process.env.NETWORK_NAME;
       } else if (!network) {
-        network = "goerli";
+        network = 'goerli';
       }
       const networkChanged = await metamask.changeNetwork(network);
       return networkChanged;
     },
-    activateAdvancedGasControlInMetamask: async (skipSetup) => {
+    activateAdvancedGasControlInMetamask: async skipSetup => {
       const activated = await metamask.activateAdvancedGasControl(skipSetup);
       return activated;
     },
-    activateEnhancedTokenDetectionInMetamask: async (skipSetup) => {
-      const activated = await metamask.activateEnhancedTokenDetection(
-        skipSetup,
-      );
-      return activated;
-    },
-    activateShowHexDataInMetamask: async (skipSetup) => {
+    activateShowHexDataInMetamask: async skipSetup => {
       const activated = await metamask.activateShowHexData(skipSetup);
       return activated;
     },
-    activateTestnetConversionInMetamask: async (skipSetup) => {
+    activateTestnetConversionInMetamask: async skipSetup => {
       const activated = await metamask.activateTestnetConversion(skipSetup);
       return activated;
     },
-    activateShowTestnetNetworksInMetamask: async (skipSetup) => {
+    activateShowTestnetNetworksInMetamask: async skipSetup => {
       const activated = await metamask.activateShowTestnetNetworks(skipSetup);
       return activated;
     },
-    activateCustomNonceInMetamask: async (skipSetup) => {
+    activateCustomNonceInMetamask: async skipSetup => {
       const activated = await metamask.activateCustomNonce(skipSetup);
       return activated;
     },
-    activateDismissBackupReminderInMetamask: async (skipSetup) => {
+    activateDismissBackupReminderInMetamask: async skipSetup => {
       const activated = await metamask.activateDismissBackupReminder(skipSetup);
       return activated;
     },
-    activateEnhancedGasFeeUIInMetamask: async (skipSetup) => {
-      const activated = await metamask.activateEnhancedGasFeeUI(skipSetup);
+    activateEthSignRequestsInMetamask: async skipSetup => {
+      const activated = await metamask.activateEthSignRequests(skipSetup);
       return activated;
     },
-    activateShowCustomNetworkListInMetamask: async (skipSetup) => {
-      const activated = await metamask.activateShowCustomNetworkList(skipSetup);
+    activateImprovedTokenAllowanceInMetamask: async skipSetup => {
+      const activated = await metamask.activateImprovedTokenAllowance(
+        skipSetup,
+      );
       return activated;
     },
     resetMetamaskAccount: async () => {
@@ -195,7 +231,7 @@ export const setupNodeEvents = (on, config) => {
       const rejected = await metamask.rejectDecryptionRequest();
       return rejected;
     },
-    importMetamaskToken: async (tokenConfig) => {
+    importMetamaskToken: async tokenConfig => {
       const imported = await metamask.importToken(tokenConfig);
       return imported;
     },
@@ -207,19 +243,22 @@ export const setupNodeEvents = (on, config) => {
       const rejected = await metamask.rejectAddToken();
       return rejected;
     },
-    confirmMetamaskPermissionToSpend: async () => {
-      const confirmed = await metamask.confirmPermissionToSpend();
+    confirmMetamaskPermissionToSpend: async spendLimit => {
+      const confirmed = await metamask.confirmPermissionToSpend(spendLimit);
       return confirmed;
     },
     rejectMetamaskPermissionToSpend: async () => {
       const rejected = await metamask.rejectPermissionToSpend();
       return rejected;
     },
-    acceptMetamaskAccess: async (options) => {
+    confirmMetamaskPermisionToApproveAll: metamask.confirmPermisionToApproveAll,
+    rejectMetamaskPermisionToApproveAll: metamask.rejectPermisionToApproveAll,
+    acceptMetamaskAccess: async options => {
       const accepted = await metamask.acceptAccess(options);
       return accepted;
     },
-    confirmMetamaskTransaction: async (gasConfig) => {
+    rejectMetamaskAccess: metamask.rejectAccess,
+    confirmMetamaskTransaction: async gasConfig => {
       const confirmed = await metamask.confirmTransaction(gasConfig);
       return confirmed;
     },
@@ -259,9 +298,33 @@ export const setupNodeEvents = (on, config) => {
       network,
       password,
       enableAdvancedSettings,
+      enableExperimentalSettings,
     }) => {
       if (process.env.NETWORK_NAME) {
         network = process.env.NETWORK_NAME;
+      }
+      if (
+        process.env.NETWORK_NAME &&
+        process.env.RPC_URL &&
+        process.env.CHAIN_ID &&
+        process.env.SYMBOL
+      ) {
+        network = {
+          id: process.env.CHAIN_ID,
+          name: process.env.NETWORK_NAME,
+          nativeCurrency: {
+            symbol: process.env.SYMBOL,
+          },
+          rpcUrls: {
+            public: { http: [process.env.RPC_URL] },
+            default: { http: [process.env.RPC_URL] },
+          },
+          blockExplorers: {
+            etherscan: { url: process.env.BLOCK_EXPLORER },
+            default: { url: process.env.BLOCK_EXPLORER },
+          },
+          testnet: process.env.IS_TESTNET,
+        };
       }
       if (process.env.PRIVATE_KEY) {
         secretWordsOrPrivateKey = process.env.PRIVATE_KEY;
@@ -269,34 +332,17 @@ export const setupNodeEvents = (on, config) => {
       if (process.env.SECRET_WORDS) {
         secretWordsOrPrivateKey = process.env.SECRET_WORDS;
       }
-      await metamask.initialSetup({
+      await metamask.initialSetup(null, {
         secretWordsOrPrivateKey,
         network,
         password,
         enableAdvancedSettings,
+        enableExperimentalSettings,
       });
       return true;
     },
-    snxExchangerSettle: async ({ asset, walletAddress, privateKey }) => {
-      if (process.env.PRIVATE_KEY) {
-        privateKey = process.env.PRIVATE_KEY;
-      }
-      const settled = await synthetix.settle({
-        asset,
-        walletAddress,
-        privateKey,
-      });
-      return settled;
-    },
-    snxCheckWaitingPeriod: async ({ asset, walletAddress }) => {
-      const waitingPeriod = await synthetix.checkWaitingPeriod({
-        asset,
-        walletAddress,
-      });
-      return waitingPeriod;
-    },
-    getNetwork: () => {
-      const network = helpers.getNetwork();
+    getCurrentNetwork: () => {
+      const network = helpers.getCurrentNetwork();
       return network;
     },
     etherscanGetTransactionStatus: async ({ txid }) => {
@@ -311,47 +357,18 @@ export const setupNodeEvents = (on, config) => {
 
   if (process.env.BASE_URL) {
     config.e2e.baseUrl = process.env.BASE_URL;
-    config.component.baseUrl = process.env.BASE_URL;
   }
 
   if (process.env.CI) {
-    config.retries.runMode = 1;
-    config.retries.openMode = 1;
+    config.retries = {
+      runMode: 1,
+      openMode: 1
+    }
   }
 
   if (process.env.SKIP_METAMASK_SETUP) {
     config.env.SKIP_METAMASK_SETUP = true;
   }
-
-  on(
-    "before:browser:launch",
-    async (browser = { name: "", isHeadless: null }, arguments_) => {
-      if (browser.name === "chrome" && browser.isHeadless) {
-        // eslint-disable-next-line no-restricted-syntax
-        console.log("TRUE"); // required by cypress ¯\_(ツ)_/¯
-        arguments_.args.push("--window-size=1920,1080");
-        return arguments_;
-      }
-
-      // metamask welcome screen blocks cypress from loading
-      if (browser.name === "chrome") {
-        arguments_.args.push(
-          "--disable-background-timer-throttling",
-          "--disable-backgrounding-occluded-windows",
-          "--disable-renderer-backgrounding",
-        );
-      }
-      if (!process.env.SKIP_METAMASK_INSTALL) {
-        // NOTE: extensions cannot be loaded in headless Chrome
-        const metamaskPath = await helpers.prepareMetamask(
-          process.env.METAMASK_VERSION || "10.21.0",
-        );
-        arguments_.extensions.push(metamaskPath);
-      }
-
-      return arguments_;
-    },
-  );
 
   return config;
 };

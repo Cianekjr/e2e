@@ -18,7 +18,7 @@
     "useUnknownInCatchVariables": false,
     "incremental": true
   },
-  "include": ["**/*.d.ts", "**/*.ts", "**/*.tsx", "**/*.json"],
+  "include": ["**/*.d.ts", "**/*.ts", "**/*.tsx", "**/*.json", "tests/e2e/plugins/index.js"],
   "exclude": ["node_modules"],
   "resolve": {
     "extensions": [".ts", ".tsx", ".js", ".jsx", ".json"]

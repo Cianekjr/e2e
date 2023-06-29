@@ -8,13 +8,18 @@
       "@synthetixio/synpress/support",
       "cypress-wait-until",
       "@testing-library/cypress"
+    ],
+    "target": "ES2022",
+    "lib": [
+      "ES2022"
     ]
   },
   "include": [
     "**/*.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "**/*.json"
+    "**/*.json",
+    "plugins/index.js"
   ],
   "exclude": [
     "node_modules"

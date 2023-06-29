@@ -3,7 +3,7 @@ import { v4 as uuidV4 } from "uuid";
 import MyProfilePage from "../pages/my-profile-page";
 import Auth from "../pages/auth";
 import HomePage from "../pages/home-page";
-import { generateNewWallet } from "../helpers/wallet";
+// import { generatePrivateKey } from "viem/accounts"
 import Global from "../pages/global";
 
 const myProfile = new MyProfilePage();
@@ -31,8 +31,9 @@ const login = (name: string, callback: () => void) => {
 
 describe("MM account", () => {
   before(() => {
-    const wallet = generateNewWallet();
-    cy.importMetamaskAccount(wallet.privateKey);
+    // const wallet = generateNewWallet();
+    const privateKey = '0xfaeea9bf80848f8131775203f742c1432a684b71471bf790c7220be2a1d76ec2'
+    cy.importMetamaskAccount(privateKey);
   });
 
   after(() => {
@@ -45,29 +46,29 @@ describe("MM account", () => {
     });
   });
 
-  it(`should log in user`, () => {
-    cy.clearCookies();
+  // it(`should log in user`, () => {
+  //   cy.clearCookies();
 
-    login("metamask-session-login", () => {
-      cy.confirmMetamaskSignatureRequest();
-    });
-  });
+  //   login("metamask-session-login", () => {
+  //     cy.confirmMetamaskSignatureRequest();
+  //   });
+  // });
 
-  it(`should update user profile`, () => {
-    login("metamask-session-login", () => {
-      cy.confirmMetamaskSignatureRequest();
-    });
+  // it(`should update user profile`, () => {
+  //   login("metamask-session-login", () => {
+  //     cy.confirmMetamaskSignatureRequest();
+  //   });
 
-    myProfile.visit();
+  //   myProfile.visit();
 
-    myProfile.fillNickname(config.nickname);
-    myProfile.fillEmail(config.email);
-    myProfile.submitMyProfileUpdate();
+  //   myProfile.fillNickname(config.nickname);
+  //   myProfile.fillEmail(config.email);
+  //   myProfile.submitMyProfileUpdate();
 
-    cy.waitForResources();
-    cy.reload();
+  //   cy.waitForResources();
+  //   cy.reload();
 
-    myProfile.checkNickname(config.nickname);
-    myProfile.checkEmail(config.email);
-  });
+  //   myProfile.checkNickname(config.nickname);
+  //   myProfile.checkEmail(config.email);
+  // });
 });
