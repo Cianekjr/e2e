@@ -23,7 +23,7 @@ export const setupNodeEvents = (on: Cypress.PluginEvents, config: Cypress.Plugin
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
 
-  on('before:browser:launch', async (browser = {}, arguments_) => {
+  on('before:browser:launch', async (browser = Cypress.browser, arguments_) => {
     if (browser.name === 'chrome') {
       // metamask welcome screen blocks cypress from loading
       arguments_.args.push(
