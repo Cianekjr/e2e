@@ -26,6 +26,8 @@ const login = (name: string, callback: () => void) => {
     auth.pressConnectMetamask();
 
     cy.isMetamaskWindowActive()
+    cy.switchToMetamaskNotification()
+    // cy.switchToMetamaskNotification()
 
     callback();
 
