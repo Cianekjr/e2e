@@ -49,8 +49,8 @@ describe("MM account", () => {
 
   it(`should sign up user`, () => {
     login("metamask-session-register", () => {
-      // global.acceptMetamaskAccessRequest();
-      global.confirmMetamaskDataSignatureRequest()
+      global.acceptMetamaskAccessRequest();
+      // global.confirmMetamaskDataSignatureRequest()
     });
   });
 
