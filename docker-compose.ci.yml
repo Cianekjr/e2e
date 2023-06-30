@@ -22,9 +22,9 @@ services:
       # - video
     entrypoint: []
     working_dir: /app
-    volumes:
-      - ./docker/videos:/app/tests/e2e/videos
-      - ./docker/screenshots:/app/tests/e2e/screenshots
+    # volumes:
+    #   - ./docker/videos:/app/tests/e2e/videos
+    #   - ./docker/screenshots:/app/tests/e2e/screenshots
     command: >
       bash -c 'yarn test:e2e'
     # command: >
