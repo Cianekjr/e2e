@@ -5,7 +5,7 @@ services:
     container_name: synpress
     build: .
     environment:
-      - DISPLAY=
+      - DISPLAY=display:0.0
       - PRIVATE_KEY=${PRIVATE_KEY}
       - GITHUB_TOKEN=${GITHUB_TOKEN}
       # - DEBUG=${DEBUG}
@@ -19,19 +19,18 @@ services:
       - CYPRESS_DOCKER_RUN=true
     depends_on:
       - display
-      - video
+      # - video
     entrypoint: []
     working_dir: /app
     volumes:
       - ./docker/videos:/app/tests/e2e/videos
       - ./docker/screenshots:/app/tests/e2e/screenshots
     command: >
-      bash -c 'echo -n "======> local noVNC URL: http://localhost:8080/vnc.html?autoconnect=true " && npx wait-on http://display:8080 && yarn test:e2e'
+      bash -c 'yarn test:e2e'
     # command: >
     #   bash -c 'yarn test:e2e'
     networks:
       - x11
-    ipc: host
 
   display:
     container_name: display
@@ -45,51 +44,52 @@ services:
     networks:
       - x11
 
-  # ngrok:
-  #   profiles:
-  #     - ngrok
-  #   container_name: ngrok
-  #   image: synthetixio/ngrok:016121eafdfff448414894d0ca5a50b1d72b62eb-base
-  #   ports:
-  #     - '4040:4040'
-  #   command:
-  #     [
-  #       'ngrok',
-  #       'http',
-  #       'display:8080',
-  #       '--authtoken',
-  #       '${NGROK_AUTH}'
-  #     ]
-  #   depends_on:
-  #     - display
-  #   networks:
-  #     - x11
-
-  video:
-    container_name: video
-    image: synthetixio/video:457bb48776c3b14de232d9dda620ba9188dc40ac-base
-    volumes:
-      - ./docker/videos-ci:/videos
-    environment:
-      - FILE_NAME=CI-full-video.mp4
-      - SE_SCREEN_WIDTH=1920
-      - SE_SCREEN_HEIGHT=1080
-    depends_on:
-      - display
-    networks:
-      - x11
-  # foundry:
-  #   profiles:
-  #     - foundry
-  #   container_name: foundry
-  #   image: synthetixio/foundry:457bb48776c3b14de232d9dda620ba9188dc40ac-base
-  #   command: [ 'anvil --no-cors --fork-url ${ANVIL_FORK_URL}' ]
-  #   environment:
-  #     - ANVIL_IP_ADDR=0.0.0.0
-  #   ports:
-  #     - '8545:8545'
-  #   networks:
-  #     - x11
-
 networks:
   x11:
+
+    # ngrok:
+    #   profiles:
+    #     - ngrok
+    #   container_name: ngrok
+    #   image: synthetixio/ngrok:016121eafdfff448414894d0ca5a50b1d72b62eb-base
+    #   ports:
+    #     - '4040:4040'
+    #   command:
+    #     [
+    #       'ngrok',
+    #       'http',
+    #       'display:8080',
+    #       '--authtoken',
+    #       '${NGROK_AUTH}'
+    #     ]
+    #   depends_on:
+    #     - display
+    #   networks:
+    #     - x11
+
+    # video:
+    #   container_name: video
+    #   image: synthetixio/video:457bb48776c3b14de232d9dda620ba9188dc40ac-base
+    #   volumes:
+    #     - ./docker/videos-ci:/videos
+    #   environment:
+    #     - FILE_NAME=CI-full-video.mp4
+    #     - SE_SCREEN_WIDTH=1920
+    #     - SE_SCREEN_HEIGHT=1080
+    #   depends_on:
+    #     - display
+    #   networks:
+    #     - x11
+    # foundry:
+    #   profiles:
+    #     - foundry
+    #   container_name: foundry
+    #   image: synthetixio/foundry:457bb48776c3b14de232d9dda620ba9188dc40ac-base
+    #   command: [ 'anvil --no-cors --fork-url ${ANVIL_FORK_URL}' ]
+    #   environment:
+    #     - ANVIL_IP_ADDR=0.0.0.0
+    #   ports:
+    #     - '8545:8545'
+    #   networks:
+    #     - x11
+

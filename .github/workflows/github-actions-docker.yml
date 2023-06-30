@@ -7,7 +7,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x.x]
+        node-version: [18.16]
 
     steps:
       - name: Chown workspace
@@ -16,14 +16,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # pin@v2
 
-      # - name: Set up QEMU
-      #   uses: docker/setup-qemu-action@e81a89b1732b9c48d79cd809d8d81d79c4647a18 # pin@v1
-
-      # - name: Set up Docker Buildx
-      #   uses: docker/setup-buildx-action@8c0edbc76e98fa90f69d9a2c020dcb50019dc325 # pin@v1
-
       - name: Set up Docker
         uses: docker-practice/actions-setup-docker@master
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@8c0edbc76e98fa90f69d9a2c020dcb50019dc325 # pin@v1
 
       - name: Cache Docker layers
         uses: actions/cache@58c146cc91c5b9e778e71775dfe9bf1442ad9a12 # pin@v2
@@ -31,8 +28,9 @@ jobs:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-buildx-
-      - name: Run e2e tests res)
+            ${{ runner.os }}-buildx-${{ github.sha }}
+
+      - name: Run e2e tests res
         run: |
           docker-compose -f docker-compose.ci.yml up --build --exit-code-from synpress
         env:
