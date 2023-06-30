@@ -25,6 +25,8 @@ const login = (name: string, callback: () => void) => {
     auth.isLoginModalOpen();
     auth.pressConnectMetamask();
 
+    cy.isMetamaskWindowActive()
+
     callback();
 
     auth.isLoggedIn();
