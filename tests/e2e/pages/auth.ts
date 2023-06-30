@@ -12,7 +12,7 @@ export default class Auth extends Global {
   }
 
   isLoginModalOpen() {
-    cy.get('h3:contains("CONNECT YOUR WALLET")').should("be.visible");
+    cy.get('h3:contains("Connect your wallet")').should("be.visible");
   }
 
   pressConnectMetamask() {

@@ -8,4 +8,7 @@ export default class HomePage extends Global {
   visit() {
     cy.visit("/");
   }
+  isOpen() {
+    cy.get('h3:contains("Exclusive, time-limited collections of our top partners")').should("be.visible");
+  }
 }

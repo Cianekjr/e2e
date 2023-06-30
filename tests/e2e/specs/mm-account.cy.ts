@@ -20,6 +20,7 @@ const config = {
 const login = (name: string, callback: () => void) => {
   cy.session(name, () => {
     home.visit();
+    home.isOpen();
     auth.pressLoginButton();
     auth.isLoginModalOpen();
     auth.pressConnectMetamask();
