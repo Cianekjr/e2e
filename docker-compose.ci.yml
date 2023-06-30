@@ -4,6 +4,7 @@ services:
   synpress:
     container_name: synpress
     build: .
+    platform: linux/arm64
     environment:
       - DISPLAY=display:0.0
       - PRIVATE_KEY=${PRIVATE_KEY}
@@ -17,8 +18,8 @@ services:
       - NETWORK_NAME=
       - CYPRESS_BASE_URL=https://uniqly-app-stage-08-9375.herokuapp.com
       - CYPRESS_DOCKER_RUN=true
-    depends_on:
-      - display
+      # depends_on:
+      #   - display
       # - video
     entrypoint: []
     working_dir: /app
@@ -31,19 +32,19 @@ services:
     #   bash -c 'yarn test:e2e'
     networks:
       - x11
-
-  display:
-    container_name: display
-    platform: linux/amd64
-    image: synthetixio/display:016121eafdfff448414894d0ca5a50b1d72b62eb-base
-    environment:
-      - RUN_XTERM=no
-      - DISPLAY_WIDTH=1920
-      - DISPLAY_HEIGHT=1080
-    ports:
-      - '8080:8080'
-    networks:
-      - x11
+    ipc: host
+  # display:
+  #   container_name: display
+  #   image: synthetixio/display:016121eafdfff448414894d0ca5a50b1d72b62eb-base
+  #   environment:
+  #     - RUN_XTERM=no
+  #     - DISPLAY_WIDTH=1920
+  #     - DISPLAY_HEIGHT=1080
+  #   ports:
+  #     - '8080:8080'
+  #   networks:
+  #     - x11
+  #   ipc: host
 
 networks:
   x11:
