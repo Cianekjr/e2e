@@ -4,8 +4,6 @@ jobs:
   build:
     timeout-minutes: 60
     runs-on: macos-latest
-    env:
-      - ELECTRON_EXTRA_LAUNCH_ARGS: '--disable-gpu'
 
     strategy:
       matrix:
