@@ -1,6 +1,9 @@
 export default class Global {
   acceptMetamaskAccessRequest(allAccounts = false) {
     return cy.acceptMetamaskAccess({
+      confirmDataSignatureRequest: true,
+      // confirmSignatureRequest: true,
+      // allAccounts,
     });
   }
 
