@@ -34,6 +34,7 @@ services:
 
   display:
     container_name: display
+    platform: linux/amd64
     image: synthetixio/display:016121eafdfff448414894d0ca5a50b1d72b62eb-base
     environment:
       - RUN_XTERM=no
