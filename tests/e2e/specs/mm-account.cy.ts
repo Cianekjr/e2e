@@ -21,6 +21,7 @@ const login = (name: string, callback: () => void) => {
   cy.session(name, () => {
     home.visit();
     auth.pressLoginButton();
+    auth.isLoginModalOpen();
     auth.pressConnectMetamask();
 
     callback();
@@ -32,8 +33,8 @@ const login = (name: string, callback: () => void) => {
 describe("MM account", () => {
   before(() => {
     // const wallet = generateNewWallet();
-    // const privateKey = '0xfaeea9bf80848f8131775203f742c1432a684b71471bf790c7220be2a1d76ec2'
-    // cy.importMetamaskAccount(privateKey);
+    const privateKey = '0xfaeea9bf80848f8131775203f742c1432a684b71471bf790c7220be2a1d76ec2'
+    cy.importMetamaskAccount(privateKey);
   });
 
   after(() => {

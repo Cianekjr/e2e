@@ -11,6 +11,10 @@ export default class Auth extends Global {
       .click();
   }
 
+  isLoginModalOpen() {
+    cy.get('h3:contains("CONNECT YOUR WALLET")').should("be.visible");
+  }
+
   pressConnectMetamask() {
     cy.get('button[type="button"]:contains("MetaMask")').should("be.visible").click();
   }
