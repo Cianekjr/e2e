@@ -27,6 +27,7 @@ const login = (name: string, callback: () => void) => {
 
     cy.isMetamaskWindowActive()
     cy.switchToMetamaskNotification()
+    cy.switchToMetamaskWindow()
     // cy.switchToMetamaskNotification()
 
     callback();
